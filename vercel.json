@@ -1,1 +1,16 @@
-{ "rewrites": [{ "source": "/(.*)", "destination": "/" }] }
+{
+    "rewrites": [
+        {
+            "source": "/(.*)", 
+            "destination": "/"
+        },
+        {
+          "source": "/views/**",
+          "destination": "/views/index.html"
+        },
+        {
+          "source": "/_api/**",
+          "destination": "/_api/package.json"
+        }
+    ]
+}

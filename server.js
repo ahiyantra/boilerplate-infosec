@@ -70,6 +70,14 @@ app.get("/_api/package.json", function (req, res, next) {
   });
 });
 
+// Route to access index[.]html
+app.get("/views/index.html", function (req, res, next) {
+  fs.readFile(__dirname + "/views/index.html", function (err, data) {
+    if (err) return next(err);
+    res.type("txt").send(data.toString());
+  });
+});
+
 app.use(function (req, res, next) {
   res.status(404).type("txt").send("Not Found");
 });
