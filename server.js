@@ -54,6 +54,7 @@ app.get("/app-info", function (req, res) {
   res.json({ headers: hObj, appStack: appMainRouteStack });
 });
 
+// Route to access package[.]json
 app.get("/package.json", function (req, res, next) {
   fs.readFile(__dirname + "/package.json", function (err, data) {
     if (err) return next(err);
@@ -61,10 +62,7 @@ app.get("/package.json", function (req, res, next) {
   });
 });
 
-app.use(function (req, res, next) {
-  res.status(404).type("txt").send("Not Found");
-});
-
+// Route to access package[.]json
 app.get("/_api/package.json", function (req, res, next) {
   fs.readFile(__dirname + "/package.json", function (err, data) {
     if (err) return next(err);

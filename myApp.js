@@ -6,6 +6,7 @@ app.disable("x-powered-by"); /* added just in case necessary */
 var fs = require("fs");
 var path = require("path");
 
+// Route to access package[.]json
 app.get("/package.json", function (req, res, next) {
   fs.readFile(__dirname + "/package.json", function (err, data) {
     if (err) return next(err);
@@ -13,6 +14,7 @@ app.get("/package.json", function (req, res, next) {
   });
 });
 
+// Route to access package[.]json
 app.get("/_api/package.json", function (req, res, next) {
   fs.readFile(__dirname + "/package.json", function (err, data) {
     if (err) return next(err);
@@ -25,7 +27,7 @@ app.get("/_api/package.json", function (req, res, next) {
 const api = require('./server.js');
 app.use(express.static('public'));
 app.disable('strict-transport-security');
-app.use('/_api', api);
+//app.use('/_api', api); 
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
@@ -40,4 +42,4 @@ app.use(function (req, res, next) {
   res.status(404).type("txt").send("Not Found");
 });
 
-module.exports = app; // moved to end to resolve error
+module.exports = app;
