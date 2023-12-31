@@ -5,11 +5,11 @@
             "destination": "/"
         },
         {
-          "source": "/views/**",
+          "source": "/views/(.*)",
           "destination": "/views/index.html"
         },
         {
-          "source": "/_api/**",
+          "source": "/_api/(.*)",
           "destination": "/_api/package.json"
         }
     ]
