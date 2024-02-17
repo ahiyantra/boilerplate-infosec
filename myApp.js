@@ -1,8 +1,64 @@
+const express = require('express');
+const app = express();
+
+const helmet = require('helmet'); /* step 1 */
+
+app.use(helmet.hidePoweredBy()); /* step 1 */
+
+app.use(helmet.frameguard({action: 'deny'})); /* step 2 */
+
+app.use(helmet.xssFilter()); /* step 3 */
+
+app.use(helmet.noSniff()); /* step 4 */
+
+app.use(helmet.ieNoOpen()); /* step 5 */
+
+ninetyDaysInSeconds = 90*24*60*60; /* step 6 */
+
+timeInSeconds = ninetyDaysInSeconds; /* step 6 */
+
+app.use(helmet.hsts({maxAge: timeInSeconds, force: true})); /* step 6 */
+
+app.use(helmet.dnsPrefetchControl()); /* step 7? */
+
+app.use(helmet.noCache()); /* step 8? */
+
+app.use(helmet.contentSecurityPolicy({directives: {defaultSrc: ["'self'"], scriptSrc: ["'self'", "trusted-cdn.com"]}})); /* step 9? */
+
+/*
+app.use(helmet({
+  frameguard: {         // configure
+    action: 'deny'
+  },
+  contentSecurityPolicy: {    // enable and configure
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ['style.com'],
+    }
+  },
+  dnsPrefetchControl: false     // disable
+}))
+*/
+
+module.exports = app;
+const api = require('./server.js');
+app.use(express.static('public'));
+app.disable('strict-transport-security');
+app.use('/_api', api);
+app.get("/", function (request, response) {
+  response.sendFile(__dirname + '/views/index.html');
+});
+let port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Your app is listening on port ${port}`);
+});
+
+/*
 const helmet = require('helmet');
 const express = require('express');
 const app = express();
 
-app.disable("x-powered-by"); /* added just in case necessary */
+app.disable("x-powered-by"); // added just in case necessary 
 var fs = require("fs");
 var path = require("path");
 
@@ -51,3 +107,4 @@ app.use(function (req, res, next) {
 });
 
 module.exports = app;
+*/
